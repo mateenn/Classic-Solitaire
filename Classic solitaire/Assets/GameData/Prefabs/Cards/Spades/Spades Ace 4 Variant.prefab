@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5937189394038245016
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3259779706313473804, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_Name
+      value: Spades Ace 4 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473806, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259779706313473807, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139822164623958212, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 919bb6d8e262dbb4da2f99567debabc8, type: 3}
+    - target: {fileID: 8040383487082073623, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: cardId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040383487082073623, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: cardType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040383487082073623, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: cardColor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040383487082073623, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
+      propertyPath: cardTypes
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eaa9a5a945cfdd047b37b32c3f3eb763, type: 3}
