@@ -147,6 +147,13 @@ namespace TheSyedMateen.ClassicSolitaire
 
         private void OnMouseDown()
         {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+            if (hit.collider != null)
+            {
+                Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+            }
+            
             if (!_card.IsMoveable())
             {
                 if (_card.Slot == null || _card.Slot.slotType == SlotType.Stack)
