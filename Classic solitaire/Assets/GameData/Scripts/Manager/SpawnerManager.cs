@@ -1,3 +1,4 @@
+using GameAnalyticsSDK;
 using UnityEngine;
 
 namespace TheSyedMateen.ClassicSolitaire
@@ -12,11 +13,15 @@ namespace TheSyedMateen.ClassicSolitaire
 
         public VisualCard[] allCards;
         private int index = 0;
+
         private void Awake()
         {
             CreateCardsParent();
             // Shuffle and spawn all cards
             SpawnAllCards();
+
+            //only adding start level event for now
+            AddProgressionEvent(status: GAProgressionStatus.Start, "Level");
         }
 
         private void SpawnAllCards()
@@ -33,15 +38,9 @@ namespace TheSyedMateen.ClassicSolitaire
         {
             foreach (GameObject cardPrefab in cards)
             {
-                allCards[index] = Instantiate(cardPrefab, cardSpawnPosition, Quaternion.identity, _cardsParent).GetComponent<VisualCard>();
+                allCards[index] = Instantiate(cardPrefab, cardSpawnPosition, Quaternion.identity, _cardsParent)
+                    .GetComponent<VisualCard>();
                 index += 1;
-                // Assuming VisualCard is attached to the card prefab
-                /*VisualCard visualCard = cardInstance.GetComponent<VisualCard>();
-                if (visualCard != null)
-                {
-                    Card cardData = new Card(/* parameters for suit and type #1#); // Initialize with correct values
-                    visualCard.InitializeCard(cardData); // Initialize the visual representation
-                }*/
             }
         }
 
@@ -62,6 +61,11 @@ namespace TheSyedMateen.ClassicSolitaire
             }
 
             return shuffledCards;
+        }
+
+        private void AddProgressionEvent(GAProgressionStatus status, string detail)
+        {
+            GameAnalytics.NewProgressionEvent(status, detail);
         }
     }
 }

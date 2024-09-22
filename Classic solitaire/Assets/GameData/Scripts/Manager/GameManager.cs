@@ -1,28 +1,33 @@
-using System;
+using GameAnalyticsSDK;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace TheSyedMateen.ClassicSolitaire
 {
+    [DefaultExecutionOrder(-99)]
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private Slot[] foundationSlots; // Array of foundation slots
         [SerializeField] private Slot[] tableauSlots; // Array of tableau slots
 
         public static GameManager Instance;
+
         [SerializeField] private Slot stackSlot, wasteSlot;
+
         //[SerializeField] private VisualCard[] allCards; // All cards you have in the game
         [SerializeField] private SpawnerManager spawnerManager;
 
         private void Awake()
         {
             Instance = this;
+            GameAnalytics.Initialize();
+            Vibration.Init();
         }
 
         private void Start()
         {
-            Invoke(nameof(InitializeGame),.3f);
+            Invoke(nameof(InitializeGame), .3f);
+            GameAnalytics.NewDesignEvent("GameInitialized");
         }
 
         private void InitializeGame()
@@ -60,7 +65,9 @@ namespace TheSyedMateen.ClassicSolitaire
                     tableauSlots[i].AssignCard(card.GetCard());
 
                     // Set the card's position in a stacked manner
-                    card.transform.position = tableauSlots[i].transform.position + new Vector3(0, -j * 0.65f, 0); // Slight offset for stacking
+                    card.transform.position =
+                        tableauSlots[i].transform.position +
+                        new Vector3(0, -j * 0.65f, 0); // Slight offset for stacking
 
                     // Flip the top card face up, others face down
                     if (j == cardsInThisPile - 1)
