@@ -160,7 +160,7 @@ MonoBehaviour:
   front: {fileID: 2682801798906976512}
   back: {fileID: 6715761909736589286}
   suit: 3
-  cardType: 0
+  cardType: 1
 --- !u!1 &6715761909736589285
 GameObject:
   m_ObjectHideFlags: 0

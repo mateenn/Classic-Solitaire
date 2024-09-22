@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TheSyedMateen.ClassicSolitaire
@@ -238,8 +237,14 @@ namespace TheSyedMateen.ClassicSolitaire
 
           private void OnMouseDown()
         {
-            Debug.Log("is moveabke: "+_card.IsMoveable());
-            if (!_card.IsMoveable()) return;
+            if (!_card.IsMoveable())
+            {
+                if (_card.Slot == null || _card.Slot.slotType == SlotType.Stack)
+                {
+                    MoveToWaste();
+                }
+                return;
+            }
             //if (!_card.IsFaceUp) return;
             _originalPosition = transform.position; // Store the original position
 
@@ -248,5 +253,23 @@ namespace TheSyedMateen.ClassicSolitaire
             SetSortingOrder(1000);
             Debug.Log("Mouse Down: " + gameObject);
         }
+
+          private void MoveToWaste()
+          {
+              var slot = GameManager.Instance.WasteSlot;
+              if (!_card.IsFaceUp)
+              {
+                  FlipCard(true); // Flip the card face up
+              }
+
+              // Set the card's new slot to the waste slot
+              _card.Slot = slot;
+
+              // Move the card to the waste slot position
+              //transform.position = slot.transform.position;
+
+              // Add the card to the waste slot's pile
+              slot.PlaceCard(_card);
+          }
     }
 }

@@ -32,7 +32,7 @@ namespace TheSyedMateen.ClassicSolitaire
             }
         }
 
-        private void UpdateCardPositions()
+        /*private void UpdateCardPositions()
         {
             Helper.Log("stacking cards: " + cardsInPile.Count);
             for (int i = 0; i < cardsInPile.Count; i++)
@@ -41,7 +41,44 @@ namespace TheSyedMateen.ClassicSolitaire
                 visualCard.transform.localPosition =
                     transform.position + new Vector3(0, -i * 0.5f, 0); // Stack cards with some vertical spacing
             }
+        }*/
+        
+        private void UpdateCardPositions()
+        {
+            Helper.Log("stacking cards: " + cardsInPile.Count);
+
+            // Check if the slot is a waste pile
+            if (slot.slotType == SlotType.Waste)
+            {
+                // Stack only the top 3 cards with an offset, the rest stay at the pile's position
+                for (int i = 0; i < cardsInPile.Count; i++)
+                {
+                    VisualCard visualCard = cardsInPile[i];
+
+                    if (i < cardsInPile.Count - 3) // For all cards except the top 3
+                    {
+                        visualCard.transform.localPosition = transform.position; // No offset, same position
+                    }
+                    else
+                    {
+                        // Add an offset for the top 3 cards
+                        float offset = -(cardsInPile.Count - 1 - i) * 0.65f;
+                        visualCard.transform.localPosition = transform.position + new Vector3(offset, 0, 0);
+                    }
+                }
+            }
+            else
+            {
+                // Original tableau pile stacking logic
+                for (int i = 0; i < cardsInPile.Count; i++)
+                {
+                    VisualCard visualCard = cardsInPile[i];
+                    visualCard.transform.localPosition =
+                        transform.position + new Vector3(0, -i * 0.65f, 0); // Stack cards with vertical spacing
+                }
+            }
         }
+
 
         public bool CanPlaceCard(VisualCard visualCard)
         {

@@ -93,7 +93,7 @@
 
         public bool IsMoveable()
         {
-            if (Slot.slotType == SlotType.Foundation) return false;
+            if (Slot == null || Slot.slotType == SlotType.Foundation) return false;
             return ((Slot.slotType == SlotType.Waste &&  IsTopCard()&& IsFaceUp) || (Slot.slotType != SlotType.Waste && IsFaceUp));
             
         }

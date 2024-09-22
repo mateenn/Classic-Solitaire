@@ -223,7 +223,7 @@ namespace TheSyedMateen.ClassicSolitaire
                 }
             }
 
-            if (slotType == SlotType.Tableau)
+            if (slotType == SlotType.Tableau || slotType == SlotType.Waste)
             {
                 Pile pile = GetComponent<Pile>();
 
