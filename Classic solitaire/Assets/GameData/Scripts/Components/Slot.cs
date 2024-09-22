@@ -216,6 +216,10 @@ namespace TheSyedMateen.ClassicSolitaire
                 if (previousPile != null)
                 {
                     previousPile.RemoveCardFromPile(card.VisualCardRef); // Remove the card from the old pile
+                    previousPile.FlipTopCard();
+                    var topCard = previousPile.GetTopCard()?.GetCard();
+                    if (topCard != null) topCard.Slot.CurrentCard = topCard;
+                    else previousPile.slot.CurrentCard = null;
                 }
             }
 

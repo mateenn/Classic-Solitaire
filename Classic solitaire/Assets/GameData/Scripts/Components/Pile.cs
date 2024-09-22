@@ -82,12 +82,27 @@ namespace TheSyedMateen.ClassicSolitaire
             return null;
         }
 
+        public VisualCard DrawCard()
+        {
+            if (cardsInPile.Count == 0)
+            {
+                Debug.Log("No cards left to draw.");
+                return null; // No cards to draw
+            }
+
+            VisualCard drawnCard = cardsInPile[cardsInPile.Count - 1]; // Get the top card
+            cardsInPile.RemoveAt(cardsInPile.Count - 1); // Remove it from the stack
+
+            return drawnCard; // Return the drawn card
+        }
+
         public void FlipTopCard()
         {
             if (cardsInPile.Count > 0)
             {
                 VisualCard topCard = GetTopCard();
                 topCard.FlipCard(true); // Flip the top card to face up
+                
             }
         }
     }
