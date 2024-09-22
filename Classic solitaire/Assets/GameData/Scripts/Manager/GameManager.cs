@@ -45,11 +45,10 @@ namespace TheSyedMateen.ClassicSolitaire
                     cardIndex++;
 
                     // Place the card in the tableau slot
-                    tableauSlots[i].PlaceCard(card.GetCard());
+                    tableauSlots[i].AssignCard(card.GetCard());
 
                     // Set the card's position in a stacked manner
-                    card.transform.position =
-                        tableauSlots[i].transform.position + new Vector3(0, -j * 0.5f, 0); // Slight offset for stacking
+                    card.transform.position = tableauSlots[i].transform.position + new Vector3(0, -j * 0.5f, 0); // Slight offset for stacking
 
                     // Flip the top card face up, others face down
                     if (j == cardsInThisPile - 1)
@@ -96,7 +95,7 @@ namespace TheSyedMateen.ClassicSolitaire
             Slot targetFoundation = GetFoundationSlot(card.suit);
             if (targetFoundation != null)
             {
-                targetFoundation.PlaceCard(card.GetCard());
+                targetFoundation.AssignCard(card.GetCard());
                 card.transform.position = targetFoundation.transform.position;
             }
         }
