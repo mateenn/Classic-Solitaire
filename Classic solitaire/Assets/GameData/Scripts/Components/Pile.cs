@@ -67,7 +67,7 @@ namespace TheSyedMateen.ClassicSolitaire
                     }
                 }
             }
-            else
+            else if(slot.slotType == SlotType.Tableau)
             {
                 // Original tableau pile stacking logic
                 for (int i = 0; i < cardsInPile.Count; i++)
@@ -76,6 +76,10 @@ namespace TheSyedMateen.ClassicSolitaire
                     visualCard.transform.localPosition =
                         transform.position + new Vector3(0, -i * 0.65f, 0); // Stack cards with vertical spacing
                 }
+            }
+            else
+            {
+                GetTopCard().transform.localPosition = transform.position;
             }
         }
 

@@ -92,6 +92,7 @@ namespace TheSyedMateen.ClassicSolitaire
                             // No valid drop target, return to original position
                             transform.position = _originalPosition;
                             SetSortingOrder(1);
+                            EventManager.InvokeWrongMove();
                         }
                     }
                     else
@@ -173,6 +174,7 @@ namespace TheSyedMateen.ClassicSolitaire
                 // Invalid drop target, return to original position
                 transform.position = _originalPosition;
                 SetSortingOrder(1);
+                EventManager.InvokeWrongMove();
             }
         }
 
@@ -181,9 +183,8 @@ namespace TheSyedMateen.ClassicSolitaire
             // Get the slot where the card is located
             //Slot cardSlot = visualCard.GetComponentInParent<Slot>();
             Slot cardSlot = visualCard._card.Slot;
-            ;
 
-            Debug.Log("collider cardSlot: " + cardSlot+" isValid: "+ IsValidDropTarget(cardSlot));
+            Helper.Log("collider cardSlot: " + cardSlot + " isValid: " + IsValidDropTarget(cardSlot));
             // Check if the drop is valid based on the card in the pile
             if (cardSlot != null && IsValidDropTarget(cardSlot))
             {
@@ -194,6 +195,7 @@ namespace TheSyedMateen.ClassicSolitaire
                 // Invalid drop target, return to original position
                 transform.position = _originalPosition;
                 SetSortingOrder(1);
+                EventManager.InvokeWrongMove();
             }
         }
 
@@ -227,15 +229,8 @@ namespace TheSyedMateen.ClassicSolitaire
             _cardCollider.enabled = false;
             SetSortingOrder(1000); // Bring all selected cards on top
         }*/
-
-        private Vector3 GetMouseWorldPosition()
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0; // Ensure the Z-coordinate is zero for 2D
-            return mousePosition;
-        }
-
-          private void OnMouseDown()
+        
+        private void OnMouseDown()
         {
             if (!_card.IsMoveable())
             {
@@ -243,8 +238,10 @@ namespace TheSyedMateen.ClassicSolitaire
                 {
                     MoveToWaste();
                 }
+
                 return;
             }
+
             //if (!_card.IsFaceUp) return;
             _originalPosition = transform.position; // Store the original position
 
@@ -254,22 +251,22 @@ namespace TheSyedMateen.ClassicSolitaire
             Debug.Log("Mouse Down: " + gameObject);
         }
 
-          private void MoveToWaste()
-          {
-              var slot = GameManager.Instance.WasteSlot;
-              if (!_card.IsFaceUp)
-              {
-                  FlipCard(true); // Flip the card face up
-              }
+        private void MoveToWaste()
+        {
+            var slot = GameManager.Instance.WasteSlot;
+            if (!_card.IsFaceUp)
+            {
+                FlipCard(true); // Flip the card face up
+            }
 
-              // Set the card's new slot to the waste slot
-              _card.Slot = slot;
+            // Set the card's new slot to the waste slot
+            _card.Slot = slot;
 
-              // Move the card to the waste slot position
-              //transform.position = slot.transform.position;
+            // Move the card to the waste slot position
+            //transform.position = slot.transform.position;
 
-              // Add the card to the waste slot's pile
-              slot.PlaceCard(_card);
-          }
+            // Add the card to the waste slot's pile
+            slot.PlaceCard(_card);
+        }
     }
 }

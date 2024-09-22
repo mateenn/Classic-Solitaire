@@ -114,6 +114,7 @@ namespace TheSyedMateen.ClassicSolitaire
                 return true; // Foundation is empty and accepts Ace
             }
 
+            Helper.Log("Moving cardType is: "+movingCard.CardType+ "foundation: "+foundationCard.CardType+ " inc: "+foundationCard.CardType+1);
             // Check if the moving card matches the foundation card's suit and is one rank higher
             return foundationCard != null && foundationCard.Suit == movingCard.Suit &&
                    movingCard.CardType == foundationCard.CardType + 1;
@@ -223,8 +224,8 @@ namespace TheSyedMateen.ClassicSolitaire
                 }
             }
 
-            if (slotType == SlotType.Tableau || slotType == SlotType.Waste)
-            {
+            if (slotType == SlotType.Stack)return;
+            
                 Pile pile = GetComponent<Pile>();
 
                 if (pile != null)
@@ -236,14 +237,7 @@ namespace TheSyedMateen.ClassicSolitaire
                     card.VisualCardRef.SetSortingOrder(newSortingOrder); // Set correct sorting order in pile
                     CurrentCard = card;
                 }
-            }
-            else if (slotType == SlotType.Foundation)
-            {
-                card.VisualCardRef.transform.position =
-                    transform.position; // Place at the slot's world position (no stacking needed)
-                card.VisualCardRef.SetSortingOrder(0); // Reset sorting order
-            }
-
+            
             card.Slot = this; // Update the card's slot reference
         }
 
