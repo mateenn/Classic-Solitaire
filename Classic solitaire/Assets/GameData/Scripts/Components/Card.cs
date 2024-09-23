@@ -14,11 +14,12 @@ namespace TheSyedMateen.ClassicSolitaire
         public bool IsFaceUp { get; private set; }
         public Slot Slot { get; set; }
 
-        public Card(Variables.Suits suit, Variables.CardTypes cardType)
+        public Card(Variables.Suits suit, Variables.CardTypes cardType, Slot slot)
         {
             Suit = suit;
             CardType = cardType;
             IsFaceUp = false; // Initially face down
+            Slot = slot;
         }
 
         public void SetFaceUp(bool isFaceUp)

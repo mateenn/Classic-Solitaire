@@ -67,7 +67,7 @@ namespace TheSyedMateen.ClassicSolitaire
                     // Set the card's position in a stacked manner
                     card.transform.position =
                         tableauSlots[i].transform.position +
-                        new Vector3(0, -j * 0.65f, 0); // Slight offset for stacking
+                        new Vector3(0, -j * 0.75f, 0); // Slight offset for stacking
 
                     // Flip the top card face up, others face down
                     if (j == cardsInThisPile - 1)

@@ -7,6 +7,7 @@ namespace TheSyedMateen.ClassicSolitaire
     {
         [SerializeField] private GameObject[] spadeCards, heartCards, diamondCards, clubsCards;
 
+        [SerializeField] private Slot stackSlot;
         [SerializeField] private Vector3 cardSpawnPosition;
 
         private Transform _cardsParent;
@@ -40,6 +41,21 @@ namespace TheSyedMateen.ClassicSolitaire
             {
                 allCards[index] = Instantiate(cardPrefab, cardSpawnPosition, Quaternion.identity, _cardsParent)
                     .GetComponent<VisualCard>();
+                // Set the card to the stack slot
+                /*Card card = allCards[index].SetCard(stackSlot);
+
+                // Add the card to the stack slot
+                stackSlot.AssignCard(card);
+
+                // Increment the index after processing the card
+                index += 1;*/
+                
+                Card card = allCards[index].SetCard(stackSlot);
+
+                // Add the card to the stack slot
+                stackSlot.AssignCard(card);
+
+                // Increment the index after processing the card
                 index += 1;
             }
         }

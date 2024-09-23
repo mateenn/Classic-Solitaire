@@ -29,10 +29,13 @@ namespace TheSyedMateen.ClassicSolitaire
                     for (int i = count- 1; i >= 0; i--)
                     {
                         var visualCard = wastePile.GetAndRemoveCardAtIndex(i).VisualCardRef;
+                        var card = visualCard.GetCard();
                         stackPile.AddAndUpdateCardToPile(visualCard);
                         visualCard.FlipCard(false);
                         //updating card slot
-                        stackPile.slot.AssignCard(visualCard.GetCard());
+                        
+                        card.Slot = stackPile.slot;
+                        card.Slot.CurrentCard = card;
                     }
                 }
             }

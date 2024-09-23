@@ -11,7 +11,7 @@ namespace TheSyedMateen.ClassicSolitaire
         public Variables.CardTypes cardType;
         private Card _card;
 
-        private int _previousSortingOrder;
+        private int _previousSortingOrder = 1;
 
         private Vector3 _originalPosition;
         private bool _isDragging = false;
@@ -21,14 +21,22 @@ namespace TheSyedMateen.ClassicSolitaire
         private void Start()
         {
             _cardCollider = GetComponent<Collider2D>();
-            SetCard();
+            //SetCard();
         }
 
-        private void SetCard()
+        /*private void SetCard()
         {
             _card = new Card(suit, cardType);
             _card.VisualCardRef = this; // Set the reference to the VisualCard
             UpdateCardVisual();
+        }*/
+        
+        public Card SetCard(Slot slot)
+        {
+            _card = new Card(suit, cardType,slot);
+            _card.VisualCardRef = this; // Set the reference to the VisualCard
+            UpdateCardVisual();
+            return _card;
         }
 
         public Card GetCard()
@@ -158,6 +166,7 @@ namespace TheSyedMateen.ClassicSolitaire
                 Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
             }
             
+            Debug.Log("Raycast gameobject: " + gameObject );
             Debug.Log("Raycast moveable: " + _card.IsMoveable() );
             if (_card.Slot != null)
             {
@@ -189,6 +198,10 @@ namespace TheSyedMateen.ClassicSolitaire
         private void MoveToWaste()
         {
             var slot = GameManager.Instance.WasteSlot;
+            
+            //Remove From Previous Slot
+            _card.Slot.RemoveFromSlot(_card,false, false);
+            
             if (!_card.IsFaceUp)
             {
                 FlipCard(true); // Flip the card face up
@@ -196,7 +209,7 @@ namespace TheSyedMateen.ClassicSolitaire
 
             // Set the card's new slot to the waste slot
             _card.Slot = slot;
-
+            
             // Move the card to the waste slot position
             //transform.position = slot.transform.position;
             slot.PlaceCard(_card);

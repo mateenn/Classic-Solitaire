@@ -21,12 +21,12 @@ namespace TheSyedMateen.ClassicSolitaire
             UpdateCardPositions(); // Update the visual stacking of cards in the pile
         }
 
-        public void RemoveCardFromPile(VisualCard visualCard)
+        public void RemoveCardFromPile(VisualCard visualCard, bool isToUpdateCardPosition = true)
         {
             if (cardsInPile.Contains(visualCard))
             {
                 cardsInPile.Remove(visualCard);
-                UpdateCardPositions(); // Adjust positions after a card is removed
+                if(isToUpdateCardPosition) UpdateCardPositions(); // Adjust positions after a card is removed
             }
         }
 
@@ -68,12 +68,14 @@ namespace TheSyedMateen.ClassicSolitaire
                 {
                     VisualCard visualCard = cardsInPile[i];
                     visualCard.transform.localPosition =
-                        transform.position + new Vector3(0, -i * 0.65f, 0); // Stack cards with vertical spacing
+                        transform.position + new Vector3(0, -i * 0.75f, 0); // Stack cards with vertical spacing
                 }
             }
             else
             {
-                GetTopCard().transform.localPosition = transform.position;
+                //GetTopCard().transform.localPosition = transform.position;
+                var position = transform.position;
+                GetTopCard().transform.localPosition = new Vector3(position.x,position.y,0);
             }
         }
 
