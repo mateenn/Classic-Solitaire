@@ -38,23 +38,29 @@ namespace TheSyedMateen.ClassicSolitaire
             // Check if the slot is a waste pile
             if (slot.slotType == SlotType.Waste)
             {
-                // Stack only the top 3 cards with an offset, the rest stay at the pile's position
+                // Stack only the top 3 cards with an offset, the rest stay beneath the 3rd card
                 for (int i = 0; i < cardsInPile.Count; i++)
                 {
                     VisualCard visualCard = cardsInPile[i];
 
-                    if (i < cardsInPile.Count - 3) // For all cards except the top 3
-                    {
-                        visualCard.transform.localPosition = transform.position; // No offset, same position
-                    }
-                    else
+                    if (i >= cardsInPile.Count - 3) // For all cards except the top 3
                     {
                         // Add an offset for the top 3 cards
+                        Helper.Log("Stting Position: "+cardsInPile.Count+ " ind: "+i+" card: "+visualCard);
                         float offset = -(cardsInPile.Count - 1 - i) * 0.65f;
                         visualCard.transform.localPosition = transform.position + new Vector3(offset, 0, 0);
+                        
                     }
+                    /*else
+                    {
+                        // Move the cards beneath the 3rd card in the stack
+                        float offset = -(cardsInPile.Count - 2);
+                        visualCard.transform.localPosition = transform.position + new Vector3(offset, 0, 0);
+                        //visualCard.transform.localPosition = transform.position; // Align with the waste slot position
+                    }*/
                 }
             }
+
             else if (slot.slotType == SlotType.Tableau)
             {
                 // Original tableau pile stacking logic
@@ -86,6 +92,18 @@ namespace TheSyedMateen.ClassicSolitaire
             if (index >= 0 && index < cardsInPile.Count)
             {
                 return cardsInPile[index].GetCard();
+            }
+
+            return null;
+        }
+        
+        public Card GetAndRemoveCardAtIndex(int index)
+        {
+            if (index >= 0 && index < cardsInPile.Count)
+            {
+                var card =  cardsInPile[index].GetCard();
+                cardsInPile.RemoveAt(index);
+                return card;
             }
 
             return null;

@@ -11,6 +11,8 @@ namespace TheSyedMateen.ClassicSolitaire
         public Variables.CardTypes cardType;
         private Card _card;
 
+        private int _previousSortingOrder;
+
         private Vector3 _originalPosition;
         private bool _isDragging = false;
 
@@ -50,6 +52,8 @@ namespace TheSyedMateen.ClassicSolitaire
         {
             front.sortingOrder = order;
             back.sortingOrder = order - 1;
+            if (order != 1000) _previousSortingOrder = order;
+            Helper.Log("Setting Card Order: "+order+" : "+gameObject,gameObject);
         }
 
         private void Update()
@@ -86,7 +90,7 @@ namespace TheSyedMateen.ClassicSolitaire
                         {
                             // No valid drop target, return to original position
                             transform.position = _originalPosition;
-                            SetSortingOrder(1);
+                            SetSortingOrder(_previousSortingOrder);
                             EventManager.InvokeWrongMove();
                         }
                     }
@@ -94,7 +98,7 @@ namespace TheSyedMateen.ClassicSolitaire
                     {
                         // No collider hit, return the card to the original position
                         transform.position = _originalPosition;
-                        SetSortingOrder(1);
+                        SetSortingOrder(_previousSortingOrder);
                     }
 
                     _cardCollider.enabled = true;
@@ -113,7 +117,7 @@ namespace TheSyedMateen.ClassicSolitaire
             {
                 // Invalid drop target, return to original position
                 transform.position = _originalPosition;
-                SetSortingOrder(1);
+                SetSortingOrder(_previousSortingOrder);
                 EventManager.InvokeWrongMove();
             }
         }
@@ -134,7 +138,7 @@ namespace TheSyedMateen.ClassicSolitaire
             {
                 // Invalid drop target, return to original position
                 transform.position = _originalPosition;
-                SetSortingOrder(1);
+                SetSortingOrder(_previousSortingOrder);
                 EventManager.InvokeWrongMove();
             }
         }
@@ -154,6 +158,15 @@ namespace TheSyedMateen.ClassicSolitaire
                 Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
             }
             
+            Debug.Log("Raycast moveable: " + _card.IsMoveable() );
+            if (_card.Slot != null)
+            {
+                Debug.Log( " slotType: "+_card.Slot.slotType);
+            }
+            else
+            {
+                Debug.Log( " slot is null: ");
+            }
             if (!_card.IsMoveable())
             {
                 if (_card.Slot == null || _card.Slot.slotType == SlotType.Stack)

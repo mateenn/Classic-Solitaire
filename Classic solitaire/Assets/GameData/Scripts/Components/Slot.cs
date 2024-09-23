@@ -14,7 +14,7 @@ namespace TheSyedMateen.ClassicSolitaire
     public class Slot : MonoBehaviour, IDropHandler
     {
         public SlotType slotType; // Define the type of the slot
-        public Card CurrentCard { get; private set; }
+        public Card CurrentCard { get; set; }
 
         public void OnDrop(PointerEventData eventData)
         {
