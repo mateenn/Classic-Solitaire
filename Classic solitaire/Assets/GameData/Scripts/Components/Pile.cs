@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,11 +8,31 @@ namespace TheSyedMateen.ClassicSolitaire
     {
         public Slot slot;
         private List<VisualCard> cardsInPile = new List<VisualCard>();
+        private BoxCollider2D _collider2D;
+
+        private void Awake()
+        {
+            if (GetComponent<BoxCollider2D>()) _collider2D = GetComponent<BoxCollider2D>();
+        }
 
         public void AddCardToPile(VisualCard visualCard)
         {
             Helper.Log("Adding Card to this pile: " + gameObject, gameObject);
             cardsInPile.Add(visualCard);
+            CheckCollider();
+        }
+
+        private void CheckCollider()
+        {
+            if (slot.slotType != SlotType.Tableau) return;
+            if(cardsInPile.Count>0)
+            {
+                if (_collider2D.enabled == true) _collider2D.enabled = false;
+            }
+            else
+            {
+                if (_collider2D.enabled == false) _collider2D.enabled = true;
+            }
         }
 
         public void AddAndUpdateCardToPile(VisualCard visualCard)
@@ -19,6 +40,7 @@ namespace TheSyedMateen.ClassicSolitaire
             Helper.Log("Adding Card to this pile: " + gameObject, gameObject);
             cardsInPile.Add(visualCard);
             UpdateCardPositions(); // Update the visual stacking of cards in the pile
+            CheckCollider();
         }
 
         public void RemoveCardFromPile(VisualCard visualCard, bool isToUpdateCardPosition = true)
@@ -28,6 +50,8 @@ namespace TheSyedMateen.ClassicSolitaire
                 cardsInPile.Remove(visualCard);
                 if(isToUpdateCardPosition) UpdateCardPositions(); // Adjust positions after a card is removed
             }
+
+            CheckCollider();
         }
 
 
@@ -68,7 +92,7 @@ namespace TheSyedMateen.ClassicSolitaire
                 {
                     VisualCard visualCard = cardsInPile[i];
                     visualCard.transform.localPosition =
-                        transform.position + new Vector3(0, -i * 0.75f, 0); // Stack cards with vertical spacing
+                        transform.position + new Vector3(0, -i * 0.65f, 0); // Stack cards with vertical spacing
                 }
             }
             else
@@ -105,6 +129,7 @@ namespace TheSyedMateen.ClassicSolitaire
             {
                 var card =  cardsInPile[index].GetCard();
                 cardsInPile.RemoveAt(index);
+                CheckCollider();
                 return card;
             }
 
@@ -128,6 +153,8 @@ namespace TheSyedMateen.ClassicSolitaire
                 VisualCard topCard = GetTopCard();
                 topCard.FlipCard(true); // Flip the top card to face up
             }
+
+            CheckCollider();
         }
     }
 }
