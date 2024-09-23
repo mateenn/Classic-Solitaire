@@ -156,5 +156,24 @@ namespace TheSyedMateen.ClassicSolitaire
 
             CheckCollider();
         }
+        
+        
+        private readonly List<VisualCard> _splitCards = new List<VisualCard>();
+
+        public IList<VisualCard> SplitAt(VisualCard card)
+        {
+            var index = GetIndexOfCard(card);
+
+            if (index < 0 || index >= cardsInPile.Count)
+                return null;
+
+            _splitCards.Clear();
+
+            for (var i = index; i < cardsInPile.Count; i++)
+                _splitCards.Add(cardsInPile[i]);
+
+            return _splitCards;
+        }
+        
     }
 }

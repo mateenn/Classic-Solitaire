@@ -13,13 +13,16 @@ namespace TheSyedMateen.ClassicSolitaire
 
         public bool IsFaceUp { get; private set; }
         public Slot Slot { get; set; }
+        
+        public Collider2D Collider2D { get; set; }
 
-        public Card(Variables.Suits suit, Variables.CardTypes cardType, Slot slot)
+        public Card(Variables.Suits suit, Variables.CardTypes cardType, Slot slot,Collider2D collider2D)
         {
             Suit = suit;
             CardType = cardType;
             IsFaceUp = false; // Initially face down
             Slot = slot;
+            Collider2D = collider2D;
         }
 
         public void SetFaceUp(bool isFaceUp)
@@ -32,6 +35,7 @@ namespace TheSyedMateen.ClassicSolitaire
             IsFaceUp = !IsFaceUp;
         }
 
+        // Get all face-up cards below this card in the pile
         public List<Card> GetMovableCards()
         {
             List<Card> movableCards = new List<Card>();
@@ -43,7 +47,7 @@ namespace TheSyedMateen.ClassicSolitaire
                 movableCards.Add(currentCard);
                 if (currentCard.Slot is Slot slot)
                 {
-                    currentCard = slot.GetNextCard(currentCard); // Implement this to get the next card below
+                    currentCard = slot.GetNextCard(currentCard); // Get the next card below
                 }
                 else
                 {
