@@ -26,22 +26,18 @@ namespace TheSyedMateen.ClassicSolitaire
                 // For an empty Tableau slot, only allow Kings
                 if (slotType == SlotType.Tableau && card.CardType == Variables.CardTypes.King)
                 {
-                    Helper.Log("Empty Tableau slot, only allow Kings.");
                     return true;
                 }
 
                 // For an empty Foundation slot, only allow Aces
                 if (slotType == SlotType.Foundation && card.CardType == Variables.CardTypes.Ace)
                 {
-                    Helper.Log("Empty Foundation slot, only allow Aces.");
                     return true;
                 }
 
                 return false; // For other slots or card types, return false
             }
-
-            Helper.Log("CanStack: " + CanStack(CurrentCard, card) + " currentCard: " + CurrentCard.VisualCardRef
-                       + " movingCard: " + card.VisualCardRef);
+            
             // Check stacking rules based on slot type
             return slotType == SlotType.Tableau ? CanStack(CurrentCard, card) : CanPlaceInFoundation(CurrentCard, card);
         }
@@ -116,10 +112,8 @@ namespace TheSyedMateen.ClassicSolitaire
 
         public void PlaceCard(IList<VisualCard> cards)
         {
-            Debug.Log("undo cards are: "+cards.Count);
             for (int i = 0; i < cards.Count; i++)
             {
-                Debug.Log("undo Removing Cards: "+cards.Count);
                 RemoveFromSlot(cards[i].GetCard(), true);
             }
 

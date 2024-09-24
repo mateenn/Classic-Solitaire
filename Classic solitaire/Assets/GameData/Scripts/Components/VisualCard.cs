@@ -43,6 +43,7 @@ namespace TheSyedMateen.ClassicSolitaire
             }
         }
 
+
         private void UpdateCardVisual()
         {
             front.gameObject.SetActive(_card.IsFaceUp);
@@ -54,7 +55,6 @@ namespace TheSyedMateen.ClassicSolitaire
             front.sortingOrder = order;
             back.sortingOrder = order - 1;
             if (order != 1000) _previousSortingOrder = order;
-            Helper.Log("Setting Card Order: " + order + " : " + gameObject, gameObject);
         }
 
         private void Update()
@@ -112,10 +112,10 @@ namespace TheSyedMateen.ClassicSolitaire
 
                     for (int i = 0; i < _movableCards.Count; i++)
                     {
-                        Debug.Log("Setting Position orig pos " + _movableCards[i]);
                         _movableCards[i]._card.Collider2D.enabled = true;
                         //_movableCards[i]._card.OriginalPosition = _movableCards[i]._card.VisualCardRef.transform.position; // Store the original position
                     }
+
                     transform.DOScale(1f, .2f);
                 }
             }
@@ -126,8 +126,7 @@ namespace TheSyedMateen.ClassicSolitaire
             if (IsValidDropTarget(slot))
             {
                 //slot.PlaceCard(_movableCards);
-                CommandInvoker.ExecuteCommand(new PlaceCardCommand(_movableCards, slot,_card.Slot));
-
+                CommandInvoker.ExecuteCommand(new PlaceCardCommand(_movableCards, slot, _card.Slot));
             }
             else
             {
@@ -148,7 +147,7 @@ namespace TheSyedMateen.ClassicSolitaire
             if (cardSlot != null && IsValidDropTarget(cardSlot))
             {
                 //cardSlot.PlaceCard(_movableCards); // Place the card in the target slot/pile
-                CommandInvoker.ExecuteCommand(new PlaceCardCommand(_movableCards, cardSlot,_card.Slot));
+                CommandInvoker.ExecuteCommand(new PlaceCardCommand(_movableCards, cardSlot, _card.Slot));
             }
             else
             {
@@ -169,7 +168,7 @@ namespace TheSyedMateen.ClassicSolitaire
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-            
+
             if (!_card.IsMoveable())
             {
                 if (_card.Slot == null || _card.Slot.slotType == SlotType.Stack)
@@ -207,7 +206,7 @@ namespace TheSyedMateen.ClassicSolitaire
             for (int i = 0; i < _movableCards.Count; i++)
             {
                 VisualCard visualCard = _movableCards[i];
-               // visualCard.transform.DOMove(visualCard._card.OriginalPosition, .2f);
+                // visualCard.transform.DOMove(visualCard._card.OriginalPosition, .2f);
                 visualCard.transform.DOMove(visualCard._card.OriginalPosition, .2f);
                 //visualCard.transform.position = visualCard._card.OriginalPosition; // Return to original position
                 visualCard.SetSortingOrder(visualCard._previousSortingOrder); // Reset sorting order
@@ -236,8 +235,8 @@ namespace TheSyedMateen.ClassicSolitaire
 
             _temp.Add(this);
 
-            slot.PlaceCard(_temp);
-            //CommandInvoker.ExecuteCommand(new PlaceCardCommand(_temp, slot,previousSlot));
+            //slot.PlaceCard(_temp);
+            CommandInvoker.ExecuteCommand(new PlaceCardCommand(_temp, slot, previousSlot));
         }
     }
 }

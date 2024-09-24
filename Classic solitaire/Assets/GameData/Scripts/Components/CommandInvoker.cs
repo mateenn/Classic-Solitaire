@@ -18,7 +18,7 @@ namespace TheSyedMateen.ClassicSolitaire
         // Pops the last command and undoes it
         public static void UndoCommand()
         {
-            Debug.Log("Undo Count is: "+UndoStack.Count);
+            
             if (UndoStack.Count > 0)
             {
                 var activeCommand = UndoStack.Pop();

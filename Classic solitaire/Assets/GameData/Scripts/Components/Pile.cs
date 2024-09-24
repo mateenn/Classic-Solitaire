@@ -16,7 +16,6 @@ namespace TheSyedMateen.ClassicSolitaire
 
         public void AddCardToPile(VisualCard visualCard)
         {
-            Helper.Log("Adding Card to this pile: " + gameObject, gameObject);
             cardsInPile.Add(visualCard);
             CheckCollider();
 
@@ -26,7 +25,6 @@ namespace TheSyedMateen.ClassicSolitaire
 
         public void AddAndUpdateCardToPile(VisualCard visualCard)
         {
-            Helper.Log("Adding Card to this pile: " + gameObject, gameObject);
             cardsInPile.Add(visualCard);
             UpdateCardPositions(); // Update the visual stacking of cards in the pile
             CheckCollider();
@@ -47,8 +45,6 @@ namespace TheSyedMateen.ClassicSolitaire
 
         private void UpdateCardPositions()
         {
-            Helper.Log("stacking cards: " + cardsInPile.Count);
-
             // Check if the slot is a waste pile
             if (slot.slotType == SlotType.Waste)
             {
@@ -60,7 +56,6 @@ namespace TheSyedMateen.ClassicSolitaire
                     if (i >= cardsInPile.Count - 3) // For all cards except the top 3
                     {
                         // Add an offset for the top 3 cards
-                        Helper.Log("Stting Position: " + cardsInPile.Count + " ind: " + i + " card: " + visualCard);
                         float offset = -(cardsInPile.Count - 1 - i) * Variables.CardOffsetMultiplier;
                         visualCard.transform.localPosition = transform.position + new Vector3(offset, 0, 0);
                     }
@@ -80,7 +75,6 @@ namespace TheSyedMateen.ClassicSolitaire
             }
             else
             {
-                Helper.Log("My Pile is: " + gameObject, gameObject);
                 //GetTopCard().transform.localPosition = transform.position;
                 var position = transform.position;
                 var topCard = GetTopCard();

@@ -67,7 +67,7 @@ namespace TheSyedMateen.ClassicSolitaire
 
                 // Add the card to the stack slot
                 stackSlot.AssignCard(card);
-                
+
                 index += 1;
             }
         }
