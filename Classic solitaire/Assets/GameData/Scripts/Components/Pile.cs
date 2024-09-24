@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,20 +19,10 @@ namespace TheSyedMateen.ClassicSolitaire
             Helper.Log("Adding Card to this pile: " + gameObject, gameObject);
             cardsInPile.Add(visualCard);
             CheckCollider();
+
+            EvaluateFoundationCompletion(visualCard);
         }
 
-        private void CheckCollider()
-        {
-            if (slot.slotType != SlotType.Tableau) return;
-            if(cardsInPile.Count>0)
-            {
-                if (_collider2D.enabled == true) _collider2D.enabled = false;
-            }
-            else
-            {
-                if (_collider2D.enabled == false) _collider2D.enabled = true;
-            }
-        }
 
         public void AddAndUpdateCardToPile(VisualCard visualCard)
         {
@@ -41,6 +30,7 @@ namespace TheSyedMateen.ClassicSolitaire
             cardsInPile.Add(visualCard);
             UpdateCardPositions(); // Update the visual stacking of cards in the pile
             CheckCollider();
+            EvaluateFoundationCompletion(visualCard);
         }
 
         public void RemoveCardFromPile(VisualCard visualCard, bool isToUpdateCardPosition = true)
@@ -48,7 +38,7 @@ namespace TheSyedMateen.ClassicSolitaire
             if (cardsInPile.Contains(visualCard))
             {
                 cardsInPile.Remove(visualCard);
-                if(isToUpdateCardPosition) UpdateCardPositions(); // Adjust positions after a card is removed
+                if (isToUpdateCardPosition) UpdateCardPositions(); // Adjust positions after a card is removed
             }
 
             CheckCollider();
@@ -70,18 +60,10 @@ namespace TheSyedMateen.ClassicSolitaire
                     if (i >= cardsInPile.Count - 3) // For all cards except the top 3
                     {
                         // Add an offset for the top 3 cards
-                        Helper.Log("Stting Position: "+cardsInPile.Count+ " ind: "+i+" card: "+visualCard);
+                        Helper.Log("Stting Position: " + cardsInPile.Count + " ind: " + i + " card: " + visualCard);
                         float offset = -(cardsInPile.Count - 1 - i) * 0.65f;
                         visualCard.transform.localPosition = transform.position + new Vector3(offset, 0, 0);
-                        
                     }
-                    /*else
-                    {
-                        // Move the cards beneath the 3rd card in the stack
-                        float offset = -(cardsInPile.Count - 2);
-                        visualCard.transform.localPosition = transform.position + new Vector3(offset, 0, 0);
-                        //visualCard.transform.localPosition = transform.position; // Align with the waste slot position
-                    }*/
                 }
             }
 
@@ -99,7 +81,7 @@ namespace TheSyedMateen.ClassicSolitaire
             {
                 //GetTopCard().transform.localPosition = transform.position;
                 var position = transform.position;
-                GetTopCard().transform.localPosition = new Vector3(position.x,position.y,0);
+                GetTopCard().transform.localPosition = new Vector3(position.x, position.y, 0);
             }
         }
 
@@ -122,12 +104,12 @@ namespace TheSyedMateen.ClassicSolitaire
 
             return null;
         }
-        
+
         public Card GetAndRemoveCardAtIndex(int index)
         {
             if (index >= 0 && index < cardsInPile.Count)
             {
-                var card =  cardsInPile[index].GetCard();
+                var card = cardsInPile[index].GetCard();
                 cardsInPile.RemoveAt(index);
                 CheckCollider();
                 return card;
@@ -156,8 +138,8 @@ namespace TheSyedMateen.ClassicSolitaire
 
             CheckCollider();
         }
-        
-        
+
+
         private readonly List<VisualCard> _splitCards = new List<VisualCard>();
 
         public IList<VisualCard> SplitAt(VisualCard card)
@@ -174,6 +156,29 @@ namespace TheSyedMateen.ClassicSolitaire
 
             return _splitCards;
         }
-        
+
+        private void EvaluateFoundationCompletion(VisualCard visualCard)
+        {
+            if (slot.slotType != SlotType.Foundation) return;
+            if (visualCard.cardType == Variables.CardTypes.King)
+            {
+                //it means all card of slot are sucessfully filled
+                //we can check win condition here
+                EventManager.InvokeFoundationPileFilled();
+            }
+        }
+
+        private void CheckCollider()
+        {
+            if (slot.slotType != SlotType.Tableau) return;
+            if (cardsInPile.Count > 0)
+            {
+                if (_collider2D.enabled == true) _collider2D.enabled = false;
+            }
+            else
+            {
+                if (_collider2D.enabled == false) _collider2D.enabled = true;
+            }
+        }
     }
 }

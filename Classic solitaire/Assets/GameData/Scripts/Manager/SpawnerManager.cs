@@ -1,5 +1,6 @@
 using GameAnalyticsSDK;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace TheSyedMateen.ClassicSolitaire
 {
@@ -23,6 +24,17 @@ namespace TheSyedMateen.ClassicSolitaire
 
             //only adding start level event for now
             AddProgressionEvent(status: GAProgressionStatus.Start, "Level");
+        }
+
+
+        private void OnEnable()
+        {
+            EventManager.OnLevelComplete += LevelCompleted;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.OnLevelComplete -= LevelCompleted;
         }
 
         private void SpawnAllCards()
@@ -79,6 +91,10 @@ namespace TheSyedMateen.ClassicSolitaire
             return shuffledCards;
         }
 
+        private void LevelCompleted()
+        {
+            AddProgressionEvent(GAProgressionStatus.Complete, "Level");
+        }
         private void AddProgressionEvent(GAProgressionStatus status, string detail)
         {
             GameAnalytics.NewProgressionEvent(status, detail);

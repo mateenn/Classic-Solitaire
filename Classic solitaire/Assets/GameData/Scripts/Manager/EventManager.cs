@@ -8,6 +8,9 @@ namespace TheSyedMateen.ClassicSolitaire
         public static event Action OnWrongMove;
         public static event Action OnMoveComplete;
 
+        public static event Action OnFoundationPileFilled; 
+        public static event Action OnLevelComplete; 
+
         public static void InvokeWrongMove()
         {
             OnWrongMove?.Invoke();
@@ -16,6 +19,14 @@ namespace TheSyedMateen.ClassicSolitaire
         public static void InvokeMoveComplete()
         {
             OnMoveComplete?.Invoke();
+        }
+        public static void InvokeFoundationPileFilled()
+        {
+            OnFoundationPileFilled?.Invoke();
+        }
+        public static void InvokeLevelComplete()
+        {
+            OnLevelComplete?.Invoke();
         }
     }
 }

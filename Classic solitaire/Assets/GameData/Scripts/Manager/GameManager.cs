@@ -1,3 +1,4 @@
+using System;
 using GameAnalyticsSDK;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -22,12 +23,23 @@ namespace TheSyedMateen.ClassicSolitaire
             Instance = this;
             GameAnalytics.Initialize();
             Vibration.Init();
+            Application.targetFrameRate = 60;
         }
 
         private void Start()
         {
             Invoke(nameof(InitializeGame), .3f);
             GameAnalytics.NewDesignEvent("GameInitialized");
+        }
+
+        private void OnEnable()
+        {
+            EventManager.OnFoundationPileFilled += CheckWinCondition;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.OnFoundationPileFilled -= CheckWinCondition;
         }
 
         private void InitializeGame()
@@ -139,5 +151,21 @@ namespace TheSyedMateen.ClassicSolitaire
         public Slot WasteSlot => wasteSlot;
 
         public Slot StackSlot => stackSlot;
+
+
+        private void CheckWinCondition()
+        {
+            for (int i = 0; i < foundationSlots.Length; i++)
+            {
+                if(foundationSlots[i].GetComponent<Pile>().GetTopCard()
+                       .cardType != Variables.CardTypes.King) return;  //it means This pile is not filled
+            }
+            //means all piles top cards are kings
+            //which means user completed the game
+            
+            Helper.Log("Level Completed");
+            EventManager.InvokeLevelComplete();
+        }
+        
     }
 }
