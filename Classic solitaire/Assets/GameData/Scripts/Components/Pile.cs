@@ -61,7 +61,7 @@ namespace TheSyedMateen.ClassicSolitaire
                     {
                         // Add an offset for the top 3 cards
                         Helper.Log("Stting Position: " + cardsInPile.Count + " ind: " + i + " card: " + visualCard);
-                        float offset = -(cardsInPile.Count - 1 - i) * 0.65f;
+                        float offset = -(cardsInPile.Count - 1 - i) * Variables.CardOffsetMultiplier;
                         visualCard.transform.localPosition = transform.position + new Vector3(offset, 0, 0);
                     }
                 }
@@ -74,14 +74,16 @@ namespace TheSyedMateen.ClassicSolitaire
                 {
                     VisualCard visualCard = cardsInPile[i];
                     visualCard.transform.localPosition =
-                        transform.position + new Vector3(0, -i * 0.65f, 0); // Stack cards with vertical spacing
+                        transform.position + new Vector3(0, -i * Variables.CardOffsetMultiplier, 0); // Stack cards with vertical spacing
                 }
             }
             else
             {
+                Helper.Log("My Pile is: "+gameObject,gameObject);
                 //GetTopCard().transform.localPosition = transform.position;
                 var position = transform.position;
-                GetTopCard().transform.localPosition = new Vector3(position.x, position.y, 0);
+                var topCard = GetTopCard();
+               if(topCard != null) topCard.transform.localPosition = new Vector3(position.x, position.y, 0);
             }
         }
 

@@ -37,5 +37,7 @@ namespace TheSyedMateen.ClassicSolitaire
             King
         }
         public static readonly string Loading = "Loading";
+        
+        public static readonly float CardOffsetMultiplier = 0.75f;
     }
 }

@@ -344,7 +344,7 @@ namespace TheSyedMateen.ClassicSolitaire
                 for (int i = 0; i < _movableCards.Count; i++)
                 {
                     VisualCard visualCard = _movableCards[i]._card.VisualCardRef;
-                    visualCard.transform.position = mouseWorldPosition + new Vector3(0, -i * 0.65f, 0); // Stack with offset
+                    visualCard.transform.position = mouseWorldPosition + new Vector3(0, -i * Variables.CardOffsetMultiplier, 0); // Stack with offset
                 }
 
                 // Check for mouse release
