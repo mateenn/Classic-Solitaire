@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace TheSyedMateen.ClassicSolitaire
 {
@@ -12,32 +11,15 @@ namespace TheSyedMateen.ClassicSolitaire
         Stack
     }
 
-    public class Slot : MonoBehaviour/*, IDropHandler*/
+    public class Slot : MonoBehaviour
     {
         public SlotType slotType; // Define the type of the slot
         public Card CurrentCard { get; set; }
-
-        /*public void OnDrop(PointerEventData eventData)
-        {
-            if (eventData.pointerDrag != null)
-            {
-                Card draggedCard = eventData.pointerDrag.GetComponent<Card>();
-                if (draggedCard != null && CanMoveCard(draggedCard))
-                {
-                    PlaceCard(draggedCard);
-                }
-                else
-                {
-                    // Play error sound or show feedback
-                    Debug.Log("Cannot place card here.");
-                }
-            }
-        }*/
-
+        
 
         public bool CanMoveCard(Card card)
         {
-            Helper.Log("Checking for card: " + card.VisualCardRef + " slot name: "+gameObject);
+            Helper.Log("Checking for card: " + card.VisualCardRef + " slot name: " + gameObject);
 
             if (CurrentCard == null)
             {
@@ -111,21 +93,8 @@ namespace TheSyedMateen.ClassicSolitaire
         {
             if (slotType == SlotType.Tableau || slotType == SlotType.Stack)
             {
-                /*if (card.Slot != null && card.Slot is Slot previousSlot)
-                {
-                    Pile previousPile = previousSlot.GetComponent<Pile>();
-                    if (previousPile != null)
-                    {
-                        previousPile.RemoveCardFromPile(card.VisualCardRef,false); // Remove the card from the old pile
-                        //previousPile.FlipTopCard();
-                        var topCard = previousPile.GetTopCard()?.GetCard();
-                        if (topCard != null) topCard.Slot.CurrentCard = topCard;
-                        else previousPile.slot.CurrentCard = null;
-                    }
-                }*/
+                RemoveFromSlot(card, false, false);
 
-                RemoveFromSlot(card,false, false);
-                
                 // Handle Tableau slot: Use the Pile for stacking cards
                 Pile pile = GetComponent<Pile>();
 
@@ -147,24 +116,11 @@ namespace TheSyedMateen.ClassicSolitaire
 
         public void PlaceCard(IList<VisualCard> cards)
         {
-            /*if (card.Slot != null && card.Slot is Slot previousSlot)
-            {
-                Pile previousPile = previousSlot.GetComponent<Pile>();
-                if (previousPile != null)
-                {
-                    previousPile.RemoveCardFromPile(card.VisualCardRef); // Remove the card from the old pile
-                    previousPile.FlipTopCard();
-                    var topCard = previousPile.GetTopCard()?.GetCard();
-                    if (topCard != null) topCard.Slot.CurrentCard = topCard;
-                    else previousPile.slot.CurrentCard = null;
-                }
-            }*/
-            
-           
-
+            Debug.Log("undo cards are: "+cards.Count);
             for (int i = 0; i < cards.Count; i++)
             {
-                RemoveFromSlot(cards[i].GetCard(),true);
+                Debug.Log("undo Removing Cards: "+cards.Count);
+                RemoveFromSlot(cards[i].GetCard(), true);
             }
 
             if (slotType == SlotType.Stack) return;
@@ -182,51 +138,15 @@ namespace TheSyedMateen.ClassicSolitaire
                     cards[i].SetSortingOrder(newSortingOrder); // Set correct sorting order in pile
                     CurrentCard = cards[i].GetCard();
                 }
-                
             }
+
             for (int i = 0; i < cards.Count; i++)
             {
                 cards[i].GetCard().Slot = this; // Update the card's slot reference
             }
-            
+
             EventManager.InvokeMoveComplete();
         }
-        
-        
-        /*public void PlaceCard(Card card)
-        {
-            /*if (card.Slot != null && card.Slot is Slot previousSlot)
-            {
-                Pile previousPile = previousSlot.GetComponent<Pile>();
-                if (previousPile != null)
-                {
-                    previousPile.RemoveCardFromPile(card.VisualCardRef); // Remove the card from the old pile
-                    previousPile.FlipTopCard();
-                    var topCard = previousPile.GetTopCard()?.GetCard();
-                    if (topCard != null) topCard.Slot.CurrentCard = topCard;
-                    else previousPile.slot.CurrentCard = null;
-                }
-            }#1#
-            
-            RemoveFromSlot(card,true);
-
-            if (slotType == SlotType.Stack) return;
-
-            Pile pile = GetComponent<Pile>();
-
-            if (pile != null)
-            {
-                pile.AddAndUpdateCardToPile(card.VisualCardRef); // Add the card to the pile (stacking)
-
-                // Set the sorting order to be on top of the pile based on card count
-                int newSortingOrder = pile.GetCardCount();
-                card.VisualCardRef.SetSortingOrder(newSortingOrder); // Set correct sorting order in pile
-                CurrentCard = card;
-            }
-
-            card.Slot = this; // Update the card's slot reference
-            EventManager.InvokeMoveComplete();
-        }*/
 
         public void RemoveFromSlot(Card card, bool isToFlipFollowUpCard, bool isToUpdateCardPosition = true)
         {
@@ -235,15 +155,14 @@ namespace TheSyedMateen.ClassicSolitaire
                 Pile previousPile = previousSlot.GetComponent<Pile>();
                 if (previousPile != null)
                 {
-                    previousPile.RemoveCardFromPile(card.VisualCardRef,isToUpdateCardPosition); // Remove the card from the old pile
-                    if(isToFlipFollowUpCard) previousPile.FlipTopCard();
+                    previousPile.RemoveCardFromPile(card.VisualCardRef,
+                        isToUpdateCardPosition); // Remove the card from the old pile
+                    if (isToFlipFollowUpCard) previousPile.FlipTopCard();
                     var topCard = previousPile.GetTopCard()?.GetCard();
                     if (topCard != null) topCard.Slot.CurrentCard = topCard;
                     else previousPile.slot.CurrentCard = null;
                 }
             }
         }
-        
-        
     }
 }

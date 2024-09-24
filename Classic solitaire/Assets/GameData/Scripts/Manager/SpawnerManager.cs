@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GameAnalyticsSDK;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -40,11 +41,19 @@ namespace TheSyedMateen.ClassicSolitaire
         private void SpawnAllCards()
         {
             allCards = new VisualCard[52];
-            // Shuffle and spawn cards for each suit
-            Spawn(ShuffleArray(spadeCards));
-            Spawn(ShuffleArray(heartCards));
-            Spawn(ShuffleArray(diamondCards));
-            Spawn(ShuffleArray(clubsCards));
+
+            // Combine all the cards into one array
+            List<GameObject> combinedCards = new List<GameObject>();
+            combinedCards.AddRange(spadeCards);
+            combinedCards.AddRange(heartCards);
+            combinedCards.AddRange(diamondCards);
+            combinedCards.AddRange(clubsCards);
+
+            // Shuffle all the combined cards
+            GameObject[] shuffledCombinedCards = ShuffleArray(combinedCards.ToArray());
+
+            // Spawn the shuffled combined cards
+            Spawn(shuffledCombinedCards);
         }
 
         private void Spawn(GameObject[] cards)
@@ -53,21 +62,12 @@ namespace TheSyedMateen.ClassicSolitaire
             {
                 allCards[index] = Instantiate(cardPrefab, cardSpawnPosition, Quaternion.identity, _cardsParent)
                     .GetComponent<VisualCard>();
-                // Set the card to the stack slot
-                /*Card card = allCards[index].SetCard(stackSlot);
 
-                // Add the card to the stack slot
-                stackSlot.AssignCard(card);
-
-                // Increment the index after processing the card
-                index += 1;*/
-                
                 Card card = allCards[index].SetCard(stackSlot);
 
                 // Add the card to the stack slot
                 stackSlot.AssignCard(card);
-
-                // Increment the index after processing the card
+                
                 index += 1;
             }
         }
@@ -95,6 +95,7 @@ namespace TheSyedMateen.ClassicSolitaire
         {
             AddProgressionEvent(GAProgressionStatus.Complete, "Level");
         }
+
         private void AddProgressionEvent(GAProgressionStatus status, string detail)
         {
             GameAnalytics.NewProgressionEvent(status, detail);

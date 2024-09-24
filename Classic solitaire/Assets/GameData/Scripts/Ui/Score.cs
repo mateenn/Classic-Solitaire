@@ -12,12 +12,12 @@ namespace TheSyedMateen.ClassicSolitaire
         private void OnEnable()
         {
             _scoreText = GetComponent<TMP_Text>();
-            EventManager.OnMoveComplete += SetScore;
+            EventManager.OnMoveSuccessful += SetScore;
         }
 
         private void OnDisable()
         {
-            EventManager.OnMoveComplete -= SetScore;
+            EventManager.OnMoveSuccessful -= SetScore;
         }
 
         private void SetScore()

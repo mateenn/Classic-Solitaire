@@ -74,16 +74,17 @@ namespace TheSyedMateen.ClassicSolitaire
                 {
                     VisualCard visualCard = cardsInPile[i];
                     visualCard.transform.localPosition =
-                        transform.position + new Vector3(0, -i * Variables.CardOffsetMultiplier, 0); // Stack cards with vertical spacing
+                        transform.position +
+                        new Vector3(0, -i * Variables.CardOffsetMultiplier, 0); // Stack cards with vertical spacing
                 }
             }
             else
             {
-                Helper.Log("My Pile is: "+gameObject,gameObject);
+                Helper.Log("My Pile is: " + gameObject, gameObject);
                 //GetTopCard().transform.localPosition = transform.position;
                 var position = transform.position;
                 var topCard = GetTopCard();
-               if(topCard != null) topCard.transform.localPosition = new Vector3(position.x, position.y, 0);
+                if (topCard != null) topCard.transform.localPosition = new Vector3(position.x, position.y, 0);
             }
         }
 
@@ -136,7 +137,7 @@ namespace TheSyedMateen.ClassicSolitaire
             {
                 VisualCard topCard = GetTopCard();
                 topCard.FlipCard(true); // Flip the top card to face up
-                
+
                 //else
             }
 
@@ -164,6 +165,7 @@ namespace TheSyedMateen.ClassicSolitaire
         private void EvaluateFoundationCompletion(VisualCard visualCard)
         {
             if (slot.slotType != SlotType.Foundation) return;
+            EventManager.InvokeMoveSuccessful();
             if (visualCard.cardType == Variables.CardTypes.King)
             {
                 //it means all card of slot are sucessfully filled
@@ -196,7 +198,7 @@ namespace TheSyedMateen.ClassicSolitaire
             if (slot.slotType == SlotType.Waste || slot.slotType == SlotType.Foundation)
             {
                 var cardCount = cardsInPile.Count;
-                if(cardCount <= 0) return;
+                if (cardCount <= 0) return;
                 if (cardCount == 1)
                 {
                     //only single card in pile
@@ -205,7 +207,8 @@ namespace TheSyedMateen.ClassicSolitaire
                     return;
                 }
 
-                cardsInPile[cardCount - 2].GetCard().Collider2D.enabled = false; //setting the second last card collider false
+                cardsInPile[cardCount - 2].GetCard().Collider2D.enabled =
+                    false; //setting the second last card collider false
                 cardsInPile[cardCount - 1].GetCard().Collider2D.enabled = true; //setting the current card collider true
             }
         }
