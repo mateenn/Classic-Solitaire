@@ -50,6 +50,10 @@ namespace TheSyedMateen.ClassicSolitaire
         {
             _card.SetFaceUp(isFaceUp); // Assuming your Card class has this method
             UpdateCardVisual();
+            if (_card.Slot.slotType == SlotType.Tableau)
+            {
+                _card.Collider2D.enabled = isFaceUp;
+            }
         }
 
         private void UpdateCardVisual()
@@ -57,6 +61,18 @@ namespace TheSyedMateen.ClassicSolitaire
             front.gameObject.SetActive(_card.IsFaceUp);
             back.gameObject.SetActive(!_card.IsFaceUp);
         }
+
+        /*private void UpdateCardCollider()
+        {
+            if (_card.Slot.slotType == SlotType.Tableau)
+            {
+                //only cards with top face should have collider enabled
+                //all the colliders of the cards with back side on top should be disabled
+                //VisualCard topCard = GetTopCard();
+                Helper.Log("MateenChecking Pile Collider: "+gameObject);
+                _card.Collider2D.enabled = true;
+            }
+        }*/
 
         public void SetSortingOrder(int order)
         {

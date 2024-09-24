@@ -136,6 +136,8 @@ namespace TheSyedMateen.ClassicSolitaire
             {
                 VisualCard topCard = GetTopCard();
                 topCard.FlipCard(true); // Flip the top card to face up
+                
+                //else
             }
 
             CheckCollider();
@@ -172,6 +174,12 @@ namespace TheSyedMateen.ClassicSolitaire
 
         private void CheckCollider()
         {
+            CheckCardCollider();
+            CheckPileCollider();
+        }
+
+        private void CheckPileCollider()
+        {
             if (slot.slotType != SlotType.Tableau) return;
             if (cardsInPile.Count > 0)
             {
@@ -180,6 +188,25 @@ namespace TheSyedMateen.ClassicSolitaire
             else
             {
                 if (_collider2D.enabled == false) _collider2D.enabled = true;
+            }
+        }
+
+        private void CheckCardCollider()
+        {
+            if (slot.slotType == SlotType.Waste || slot.slotType == SlotType.Foundation)
+            {
+                var cardCount = cardsInPile.Count;
+                if(cardCount <= 0) return;
+                if (cardCount == 1)
+                {
+                    //only single card in pile
+                    //enabling top card collider so user can interact with it
+                    cardsInPile[0].GetCard().Collider2D.enabled = true;
+                    return;
+                }
+
+                cardsInPile[cardCount - 2].GetCard().Collider2D.enabled = false; //setting the second last card collider false
+                cardsInPile[cardCount - 1].GetCard().Collider2D.enabled = true; //setting the current card collider true
             }
         }
     }
